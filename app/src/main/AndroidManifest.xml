@@ -3,6 +3,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.cammace.doorbolt">
 
+  <uses-permission android:name="android.permission.INTERNET" />
+
   <application
     android:name=".DoorBoltApplication"
     android:allowBackup="false"
@@ -12,7 +14,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     tools:ignore="GoogleAppIndexingWarning">
-    <activity android:name=".StoreListActivity">
+    <activity android:name=".ui.StoreListActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
