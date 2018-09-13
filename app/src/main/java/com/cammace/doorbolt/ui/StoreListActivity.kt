@@ -12,7 +12,8 @@ import javax.inject.Inject
 
 class StoreListActivity : DaggerAppCompatActivity() {
 
-  @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+  @Inject
+  lateinit var viewModelFactory: ViewModelProvider.Factory
   private lateinit var viewModel: StoreListViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +21,10 @@ class StoreListActivity : DaggerAppCompatActivity() {
     setContentView(R.layout.activity_storelist)
 
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(StoreListViewModel::class.java)
-    viewModel.restaurants.observe(this, Observer { listOfRestaurants ->
-      Timber.v(listOfRestaurants[0].name)
+    viewModel.loadRestaurants().observe(this, Observer { listOfRestaurants ->
+      if (listOfRestaurants != null) {
+        Timber.v(listOfRestaurants[0].name)
+      }
     })
   }
 }

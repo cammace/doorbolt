@@ -1,10 +1,12 @@
 package com.cammace.doorbolt.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Restaurant(
   val id: Long,
   val name: String,
   val description: String,
-  val coverImgUrl: String,
+  @SerializedName("cover_img_url") val coverImgUrl: String,
   val status: String,
-  val deliveryFee: Double?
+  @SerializedName("delivery_fee") val deliveryFee: Double?
   )

@@ -1,6 +1,7 @@
 package com.cammace.doorbolt.di
 
 import com.cammace.doorbolt.api.DoorDashService
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -17,6 +18,7 @@ class AppModule {
   fun provideDoorDashService(): DoorDashService {
     return Retrofit.Builder()
       .addConverterFactory(GsonConverterFactory.create())
+      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
       .baseUrl(BASE_URL)
       .build()
       .create(DoorDashService::class.java)
