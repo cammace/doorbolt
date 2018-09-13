@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="restaurant"
+      type="com.cammace.doorbolt.model.Restaurant" />
+
+    <variable
+      name="imageLoading"
+      type="com.cammace.doorbolt.binding.ImageBindingAdapter" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+      android:id="@+id/imageView_restaurantItem_cover"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:imageUrl="@{restaurant.coverImgUrl}"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/guideline"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+      android:id="@+id/textView_restaurantItem_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      android:text="@{restaurant.name}"
+      app:layout_constraintBottom_toTopOf="@+id/textView_restaurantItem_description"
+      app:layout_constraintEnd_toStartOf="@+id/textView_restaurantItem_status"
+      app:layout_constraintStart_toStartOf="@+id/guideline"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="Tsing Tao" />
+
+    <TextView
+      android:id="@+id/textView_restaurantItem_description"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      android:text="@{restaurant.description}"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/textView_restaurantItem_deliveryFee"
+      app:layout_constraintStart_toStartOf="@+id/guideline"
+      app:layout_constraintTop_toBottomOf="@+id/textView_restaurantItem_name"
+      tools:text="Chinese, Soup" />
+
+    <TextView
+      android:id="@+id/textView_restaurantItem_status"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      android:text="@{restaurant.status}"
+      app:layout_constraintBottom_toTopOf="@+id/textView_restaurantItem_deliveryFee"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="22 min" />
+
+    <TextView
+      android:id="@+id/textView_restaurantItem_deliveryFee"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      android:text="@{restaurant.deliveryFee.toString()}"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textView_restaurantItem_name"
+      tools:text="0" />
+
+    <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_begin="120dp" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
