@@ -1,5 +1,6 @@
 package com.cammace.doorbolt.viewmodel
 
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +18,8 @@ const val DOORDASH_HQ_LONGITUDE = -122.139956
 const val OFFSET = 0.0
 const val LIMIT = 50
 
-class StoreListViewModel @Inject constructor(private val doorDashService: DoorDashService) : ViewModel() {
+class StoreListViewModel @Inject constructor(private val doorDashService: DoorDashService,
+                                             private val preferences: SharedPreferences) : ViewModel() {
 
   private val compositeDisposable = CompositeDisposable()
 
@@ -56,6 +58,20 @@ class StoreListViewModel @Inject constructor(private val doorDashService: DoorDa
         message
       }
       throw RuntimeException(errorMessage)
+    }
+  }
+
+  fun isRestaurantFavorite(restaurant: Restaurant): Boolean {
+    return preferences.contains(restaurant.id.toString())
+  }
+
+  fun updatePreferences(restaurant: Restaurant): Boolean {
+    return if (preferences.contains(restaurant.id.toString())) {
+      preferences.edit().remove(restaurant.id.toString()).apply()
+      false
+    } else {
+      preferences.edit().putLong(restaurant.id.toString(), restaurant.id).apply()
+      true
     }
   }
 

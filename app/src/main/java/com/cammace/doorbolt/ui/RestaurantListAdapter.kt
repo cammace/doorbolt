@@ -1,6 +1,5 @@
 package com.cammace.doorbolt.ui
 
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cammace.doorbolt.R
 import com.cammace.doorbolt.databinding.ItemRestaurantBinding
 import com.cammace.doorbolt.model.Restaurant
+import com.cammace.doorbolt.viewmodel.StoreListViewModel
 import kotlinx.android.synthetic.main.item_restaurant.view.*
 import timber.log.Timber
 
-class RestaurantListAdapter(private val preferences: SharedPreferences)
+class RestaurantListAdapter(private val viewModel: StoreListViewModel)
   : RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder>() {
 
   private var restaurantList = listOf<Restaurant>()
@@ -19,7 +19,7 @@ class RestaurantListAdapter(private val preferences: SharedPreferences)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
     val layoutInflater = LayoutInflater.from(parent.context)
     val binding: ItemRestaurantBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_restaurant, parent, false)
-    return RestaurantViewHolder(binding, preferences)
+    return RestaurantViewHolder(binding, viewModel)
   }
 
   override fun getItemCount(): Int {
@@ -27,7 +27,7 @@ class RestaurantListAdapter(private val preferences: SharedPreferences)
   }
 
   override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-    holder.binding.favorite = preferences.contains(restaurantList[position].id.toString())
+    holder.binding.favorite = viewModel.isRestaurantFavorite(restaurantList[position])
     holder.binding.restaurant = restaurantList[position]
     holder.binding.executePendingBindings()
 
@@ -41,23 +41,14 @@ class RestaurantListAdapter(private val preferences: SharedPreferences)
     notifyDataSetChanged()
   }
 
-  class RestaurantViewHolder(val binding: ItemRestaurantBinding, private val preferences: SharedPreferences)
+  class RestaurantViewHolder(val binding: ItemRestaurantBinding, private val viewModel: StoreListViewModel)
     : RecyclerView.ViewHolder(binding.root) {
 
     fun favoriteItemClicked(restaurant: Restaurant) {
       Timber.v("favorite clicked.")
-      binding.favorite = updatePreferences(restaurant)
+      binding.favorite = viewModel.updatePreferences(restaurant)
       binding.executePendingBindings()
     }
 
-    private fun updatePreferences(restaurant: Restaurant): Boolean {
-      return if (preferences.contains(restaurant.id.toString())) {
-        preferences.edit().remove(restaurant.id.toString()).apply()
-        false
-      } else {
-        preferences.edit().putLong(restaurant.id.toString(), restaurant.id).apply()
-        true
-      }
-    }
   }
 }

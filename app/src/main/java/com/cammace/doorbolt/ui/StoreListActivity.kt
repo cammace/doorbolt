@@ -21,8 +21,6 @@ class StoreListActivity : DaggerAppCompatActivity() {
   lateinit var viewModelFactory: ViewModelProvider.Factory
   private lateinit var viewModel: StoreListViewModel
 
-  private lateinit var preferences: SharedPreferences
-
   private lateinit var binding: ActivityStorelistBinding
   private var adapter: RestaurantListAdapter? = null
 
@@ -30,14 +28,13 @@ class StoreListActivity : DaggerAppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = DataBindingUtil.setContentView(this, R.layout.activity_storelist)
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(StoreListViewModel::class.java)
-    preferences = PreferenceManager.getDefaultSharedPreferences(this)
 
     initRestaurantList()
     requestRestaurants()
   }
 
   private fun initRestaurantList() {
-    adapter = RestaurantListAdapter(preferences)
+    adapter = RestaurantListAdapter(viewModel)
     binding.recyclerViewStoreListRestaurants.layoutManager = LinearLayoutManager(this)
     binding.recyclerViewStoreListRestaurants.adapter = adapter
   }
